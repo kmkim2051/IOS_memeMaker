@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         CaptionOption(emoji: "🗽", description: "foreign"),
     ];
     
-    let imageList = [["soccer_korean","baseball_korean"],["soccer_foreign","baseball_foreign"]]
+    let imageList = [["soccer_korean","soccer_foreign"],["baseball_korean","baseball_foreign"]]
     
     var selectedTopIndex = 0
     var selectedBottomIndex = 0
@@ -45,40 +45,32 @@ class ViewController: UIViewController {
         selectedTopIndex = topCaptionSegmentedControl.selectedSegmentIndex
         topCaptionLabel.text = topChoices[selectedTopIndex].description
         
+        changeLabelText()
+        changeImage()
+        
     }
     @IBAction func bottomSegmentChanged(_ sender: Any) {
         selectedBottomIndex = bottomCaptionSegmentedControl.selectedSegmentIndex
         bottomCaptionLabel.text = bottomChoices[selectedBottomIndex].description
+        
+        changeLabelText()
+        changeImage()
     }
     
-    
-    
+    func changeImage() {
+        memeImage.image = UIImage(named: imageList[selectedTopIndex][selectedBottomIndex])
+        
+    }
 
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        topCaptionSegmentedControl.removeAllSegments()
-        for choice in topChoices {
-            topCaptionSegmentedControl.insertSegment(withTitle: choice.emoji, at: topChoices.count, animated: false)
-        }
-        topCaptionSegmentedControl.selectedSegmentIndex = 0
-        
-        bottomCaptionSegmentedControl.removeAllSegments()
-        for bottomChoice in bottomChoices {
-            bottomCaptionSegmentedControl.insertSegment(withTitle: bottomChoice.emoji, at: bottomChoices.count, animated: false)
-        }
-        bottomCaptionSegmentedControl.selectedSegmentIndex = 0
-        
-        
+    func changeLabelText() {
         if selectedTopIndex == 0 {
             if selectedBottomIndex == 0 {
                 topCaptionLabel.text = "한국 축구선수"
                 bottomCaptionLabel.text = "손흥민"
             }
             else {
-                topCaptionLabel.text = "한국 야구선수"
-                bottomCaptionLabel.text = "손흥민"
+                topCaptionLabel.text = "미국 축구선수"
+                bottomCaptionLabel.text = "리오넬 메시"
             }
         } else {
             if selectedBottomIndex == 0 {
@@ -90,8 +82,25 @@ class ViewController: UIViewController {
                 bottomCaptionLabel.text = "사실 야구는 잘 모름.."
             }
         }
+    }
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        memeImage.image = UIImage(named: imageList[selectedTopIndex][selectedBottomIndex])
+        topCaptionSegmentedControl.removeAllSegments()
+        for choice in topChoices {
+            topCaptionSegmentedControl.insertSegment(withTitle: choice.emoji, at: topChoices.count, animated: false)
+        }
+
+        
+        bottomCaptionSegmentedControl.removeAllSegments()
+        for bottomChoice in bottomChoices {
+            bottomCaptionSegmentedControl.insertSegment(withTitle: bottomChoice.emoji, at: bottomChoices.count, animated: false)
+        }
+
+
+
     }
 
 }
